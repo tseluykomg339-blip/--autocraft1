@@ -25,15 +25,16 @@ local function parseCommand(msg)
     return msg, 1
 end
 
--- Функция для выкидывания предметов во все стороны
+-- Функция для выкидывания предметов (исправленная)
 local function dropAll()
     for i = 1, 16 do
         turtle.select(i)
+        -- Пытаемся выкинуть вниз
         if not turtle.dropDown() then
+            -- Если не получилось, пытаемся выкинуть вперёд
             if not turtle.drop() then
-                if not turtle.dropBack() then
-                    turtle.dropUp()
-                end
+                -- Если и вперёд не получилось, пробуем вверх
+                turtle.dropUp()
             end
         end
     end
@@ -53,9 +54,7 @@ while true do
         print("Starting " .. count .. " crafts...")
         local success = true
         
-        -- ========================================
         -- ГЛАВНЫЙ ЦИКЛ: делаем ровно count крафтов
-        -- ========================================
         for i = 1, count do
             print("Crafting step " .. i .. "/" .. count)
             
